@@ -1,0 +1,32 @@
+nginx:
+    build: ./dockerfiles/nginx
+    ports:
+      - "80:80"
+    links:
+      - "php"
+    volumes:
+      - ~/work:/opt
+
+php:
+    build: ./dockerfiles/php
+    ports:
+      - "9000:9000"
+    links:
+      - "mysql"
+      - "redis"
+    volumes:
+      - ~/work:/opt
+
+mysql:
+    build: ./dockerfiles/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ~/work/data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+redis:
+    build: ./dockerfiles/redis
+    ports:
+      - "6379:6379"
