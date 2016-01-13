@@ -14,6 +14,7 @@ php:
     links:
       - "mysql"
       - "redis"
+      - "memcache"
     volumes:
       - ~/work:/opt
 
@@ -30,3 +31,8 @@ redis:
     build: ./dockerfiles/redis
     ports:
       - "6379:6379"
+
+memcache:
+    build: ./dockerfiles/memcache
+    ports:
+      - "11211:11211"

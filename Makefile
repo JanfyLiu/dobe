@@ -15,6 +15,7 @@ build:
 	make build-mysql
 	make build-php
 	make build-node
+	make build-memcache
 
 build-nginx:
 	docker build -t dobe/nginx ./dockerfiles/nginx
@@ -32,6 +33,11 @@ build-node:
 	docker build -t dobe/node ./dockerfiles/node
 run-node:
 	docker run -i -d -p 8001:8001 -v ~/work:/opt -t dobe/node
+build-memcache:
+		docker build -t dobe/memcache ./dockerfiles/memcache
+run-memcache:
+		docker run -i -d -p 11211:11211 -v ~/work:/opt -t dobe/memcache
+
 
 stopall:
 	docker stop $(docker ps -a -q)

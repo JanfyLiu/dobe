@@ -16,6 +16,9 @@ mkdir ~/work \ #工作目录
 ```
 #### Build
 ```
+docker-machine ssh default
+curl -sSL https://get.daocloud.io/daomonit/install.sh | sh -s 433eaf4bd42e6fd80c3de4a1f9758b6b4d7afb1f
+make pull
 make dl
 docker-compose build
 ```
