@@ -1,32 +1,37 @@
 # Dobe
->一个夸平台的Docker PHP开发环境
+> Dobe is PHP development stack: Nginx, PHP-FPM, MySQL, MongoDB, Memcached, Redis, Node, Elasticsearch
 
-#### Require
-- [docker-toolbox](https://www.docker.com/docker-toolbox)
 
-#### Install
+Dobe WebServer gives you everything you need for developing PHP applications locally. I hope you'll find it as useful an addition to your dev-arsenal as I've found it!
 
+## What's inside
+
+* [Nginx](http://nginx.org/)
+* [PHP-FPM](http://php-fpm.org/)
+* [MySQL](http://www.mysql.com/)
+* [MongoDB](http://www.mongodb.org/)
+* [Memcached](http://memcached.org/)
+* [Redis](http://redis.io/)
+* [Node](https://nodejs.org/)
+* [Elasticsearch](http://www.elasticsearch.org/)
+
+## Requirements
+
+* [Docker Engine](https://docs.docker.com/installation/)
+* [Docker Compose](https://docs.docker.com/compose/)
+* [Docker Machine](https://docs.docker.com/machine/) (Mac and Windows only)
+
+## Running
+
+Set up a Docker Machine and then run:
+
+```sh
+$ make install
+$ docker-compose up -d
 ```
-mkdir ~/work \ #工作目录
-      ~/work/data \ #数据目录
-      ~/work/data/mysql \
-      ~/work/data/elasticsearch \
-      ~/work/log \ #日志目录
-      ~/work/log/nginx
-```
-#### Build
-```
-docker-machine ssh default
-curl -sSL https://get.daocloud.io/daomonit/install.sh | sh -s 433eaf4bd42e6fd80c3de4a1f9758b6b4d7afb1f
-make pull
-make dl
-docker-compose build
-```
-#### Run
-```
-docker-compose up -d
-```
-#### hosts
-```
-sudo echo "192.168.99.100 localhost docker" >> /etc/hosts
-```
+
+That's it! You can now access your configured sites via the IP address of the Docker Machine or locally if you're running a Linux flavour and using Docker natively.
+
+## License
+
+Copyright &copy; 2016-2018 [Janfy](http://github.com/JanfyLiu). Licensed under the terms of the [MIT license](LICENSE.md).

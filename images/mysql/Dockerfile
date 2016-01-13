@@ -3,6 +3,6 @@ FROM mysql:5.6
 # Write Permission
 RUN usermod -u 1000 mysql && chown mysql.mysql /var/run/mysqld/
 
-EXPOSE 3306
+ENV MYSQL_ROOT_PASSWORD 123456
 
-VOLUME ["/opt"]
+EXPOSE 3306
