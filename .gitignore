@@ -1,2 +1,4 @@
 /conf/sites-enabled/*
 !/conf/sites-enabled/default.conf
+/logs/*
+!/logs/nginx/.gitkeep
