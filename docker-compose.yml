@@ -14,11 +14,13 @@ nginx:
 php:
     build: ./images/php
     ports:
-      - "9000:9000"
+      - "9001:9001"
     links:
       - "mysql"
       - "redis"
       - "memcache"
+    volumes:
+      - ~/work:/opt
     working_dir: /opt
     env_file:
       - .env
