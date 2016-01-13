@@ -1,0 +1,2 @@
+/conf/sites-enabled/*
+!/conf/sites-enabled/default.conf

@@ -48,11 +48,11 @@ RUN pecl install /tmp/redis.tgz \
 RUN pecl install /tmp/gearman.tgz \
     && echo "extension=gearman.so" > /usr/local/etc/php/conf.d/gearman.ini
 
-RUN cd /tmp tar -xvf cphalcon.tgz \
+RUN cd /home \
+    && tar -xvf /tmp/cphalcon.tgz \
     && mv cphalcon-* phalcon \
     && cd phalcon/build && ./install \
-    && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
-    && rm -rf /tmp/cphalcon
+    && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini
