@@ -6,6 +6,10 @@ install:
 	docker-compose build
 up:
 	docker-compose up -d
+restart:
+	docker-machine restart default      # Restart the environment
+	eval "$(docker-machine env default)"  # Refresh your environment settings
+
 rmi:
 	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
 
