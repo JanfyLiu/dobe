@@ -4,10 +4,11 @@ DL_DIR = ./images/php/pkg/
 
 install:
 	docker-compose build
-stopall:
-	docker stop $(docker ps -a -q)
-clean:
+up:
+	docker-compose up -d
+rmi:
 	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
+
 pull:
 	docker pull nginx:1.9.0
 	docker pull php:5.6-fpm
@@ -17,7 +18,6 @@ pull:
 	docker pull redis:3.0
 	docker pull mongo:3.2
 	docker pull elasticsearch:2.1.0
-
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(DL_DIR)memcached.tgz
 	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(DL_DIR)memcache.tgz
