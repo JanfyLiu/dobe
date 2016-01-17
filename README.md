@@ -17,9 +17,7 @@ Dobe WebServer gives you everything you need for developing PHP applications loc
 
 ## Requirements
 
-* [Docker Engine](https://docs.docker.com/installation/)
-* [Docker Compose](https://docs.docker.com/compose/)
-* [Docker Machine](https://docs.docker.com/machine/) (Mac and Windows only)
+* [Docker ToolBox](https://www.docker.com/docker-toolbox) (Mac and Windows only)
 
 ## Running
 
