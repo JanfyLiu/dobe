@@ -6,6 +6,10 @@ RUN cp /tmp/sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
         git \
         g++ \
+        wget \
+        curl \
+        imagemagick \
+		graphicsmagick \
         libgearman-dev \
         libmemcached-dev \
         libmcrypt-dev \
@@ -25,6 +29,8 @@ RUN docker-php-ext-configure gd \
         gd \
         mbstring \
         mcrypt \
+        mysql \
+        mysqli \
         pdo_mysql \
         pdo_pgsql
 
