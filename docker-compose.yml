@@ -14,7 +14,7 @@ nginx:
 php:
     build: ./images/php
     ports:
-      - "9001:9001"
+      - "9000:9000"
     links:
       - "mysql"
       - "redis"

@@ -67,5 +67,5 @@ WORKDIR /opt
 # Write Permission
 RUN usermod -u 1000 www-data
 
-EXPOSE 9001
+EXPOSE 9000
 VOLUME ["/opt"]
