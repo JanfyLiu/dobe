@@ -1,3 +1,5 @@
 /conf/sites-enabled/*
 !/conf/sites-enabled/default.conf
 /volumes/*
+!/volumes/data/mysql/.gitkeep
+!/volumes/logs/nginx/.gitkeep
