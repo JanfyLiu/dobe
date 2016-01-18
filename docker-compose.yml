@@ -6,7 +6,7 @@ nginx:
       - "php"
     volumes:
       - ./conf/sites-enabled:/etc/nginx/conf.d
-      - ./logs/nginx:/var/log/nginx
+      - ./volumes/logs/nginx:/var/log/nginx
       - ~/work:/opt
     env_file:
       - .env
@@ -29,6 +29,8 @@ mysql:
    build: ./images/mysql
    ports:
      - "3306:3306"
+   volumes:
+      - ./volumes/data/mysql:/var/lib/mysql
    env_file:
      - .env
 
