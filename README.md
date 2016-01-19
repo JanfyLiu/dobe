@@ -1,6 +1,4 @@
 # Dobe
-> Dobe is PHP development stack: Nginx, PHP-FPM, MySQL, MongoDB, Memcached, Redis, Node, Elasticsearch
-
 
 Dobe WebServer gives you everything you need for developing PHP applications locally. I hope you'll find it as useful an addition to your dev-arsenal as I've found it!
 
