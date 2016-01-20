@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
         wget \
         curl \
         imagemagick \
-		graphicsmagick \
+        graphicsmagick \
         libgearman-dev \
         libmemcached-dev \
         libmcrypt-dev \
@@ -51,9 +51,9 @@ RUN cd /home \
     && cd phalcon/build && ./install
 
 # PHP config
+COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 COPY ./php.ini /usr/local/etc/php/php.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer
