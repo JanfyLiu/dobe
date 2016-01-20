@@ -24,7 +24,7 @@ php:
     working_dir: /opt
     env_file:
       - .env
-
+      
 mysql:
    build: ./images/mysql
    ports:
