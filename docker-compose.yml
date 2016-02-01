@@ -19,6 +19,7 @@ php:
     links:
       - "mysql"
       - "redis"
+      - "ssdb"
       - "memcache"
     volumes:
       - ~/work:/opt
@@ -43,6 +44,10 @@ mongo:
    build: ./images/mongo
    ports:
      - "27017:27017"
+ssdb:
+   build: ./images/ssdb
+   ports:
+     - "8889:8889"
 
 memcache:
    build: ./images/memcache
