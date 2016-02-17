@@ -15,11 +15,18 @@ php:
         - "9000:9000"
         - "9001:9001"
     links:
+<<<<<<< HEAD
         - "memcache"
         - "mysql"
+=======
+      - "mysql"
+      - "memcache"
+      - "node"
+>>>>>>> 030b797bcd48ca74a5ec1c04e95c91a01a496486
     volumes:
         - ~/work:/opt
     working_dir: /opt
+<<<<<<< HEAD
     env_file: .env
 memcache:
     build: images/memcache
@@ -56,6 +63,45 @@ ssdb:
 #      - "6379:6379"
 # elasticsearch:
 #    build: images/elasticsearch
+=======
+    env_file:
+      - .env
+
+node:
+   build: ./images/node
+   volumes:
+     - ~/work:/opt
+   working_dir: /opt
+   env_file:
+     - .env
+
+mysql:
+   build: ./images/mysql
+   ports:
+     - "3306:3306"
+   volumes:
+      - ./volumes/data/mysql:/var/lib/mysql
+   env_file:
+     - .env
+
+mongo:
+   build: ./images/mongo
+   ports:
+     - "27017:27017"
+
+memcache:
+   build: ./images/memcache
+   ports:
+     - "11211:11211"
+
+# redis:
+#    build: ./images/redis
+#    ports:
+#      - "6379:6379"
+#
+# elasticsearch:
+#    build: ./images/elasticsearch
+>>>>>>> 030b797bcd48ca74a5ec1c04e95c91a01a496486
 #    ports:
 #      - "9200:9200"
 #      - "9300:9300"
