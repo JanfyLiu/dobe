@@ -1,4 +1,4 @@
-FROM node
+FROM node:5.6
 
 RUN npm install -g cnpm gulp bower && npm cache clear
 

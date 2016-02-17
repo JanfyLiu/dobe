@@ -5,7 +5,7 @@ DL_DIR = ./images/php/pkg/
 build:
 	docker build -t dobe_ssdb ./images/ssdb
 run:
-	docker run -i -p 10040:10040 -v ~/work:/opt -t dobe_ssdb /bin/bash
+	docker run -i -p 16379:16379 -v ./volumes/data/ssdb:/var/lib/ssdb -t dobe_ssdb /bin/bash
 install:
 	docker-compose build
 up:

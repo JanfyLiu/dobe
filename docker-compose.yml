@@ -21,6 +21,12 @@ php:
         - ~/work:/opt
     working_dir: /opt
     env_file: .env
+node:
+   build: images/node
+   volumes:
+      - ~/work:/opt
+   working_dir: /opt
+   env_file: .env
 memcache:
     build: images/memcache
     ports:
@@ -39,23 +45,14 @@ mongo:
 ssdb:
     build: images/ssdb
     ports:
-        - "9888:9888"
-    volumes:
-        - ./volumes/data/ssdb:/var/lib/ssdb
+        - "16379:16379"
     env_file: .env
-node:
-   build: images/node
-   volumes:
-      - ~/work:/opt
-   working_dir: /opt
-   env_file: .env
-
-# redis:
-#    build: images/redis
-#    ports:
-#      - "6379:6379"
-# elasticsearch:
-#    build: images/elasticsearch
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
+redis:
+   build: images/redis
+   ports:
+     - "6379:6379"
+elasticsearch:
+   build: images/elasticsearch
+   ports:
+     - "9200:9200"
+     - "9300:9300"

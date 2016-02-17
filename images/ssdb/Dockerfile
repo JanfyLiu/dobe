@@ -25,10 +25,9 @@ RUN mkdir -p /var/lib/ssdb && \
     -e 's@pidfile = .*@pidfile = /run/ssdb.pid@' \
     -e 's@level:.*@level: info@' \
     -e 's@ip:.*@ip: 0.0.0.0@' \
-    -e 's@port:.*@16379@' \
+    -e 's@port:.*@port: 16379@' \
     -i /etc/ssdb.conf
 
-ENV TZ Asia/Shanghai
 EXPOSE 16379
 VOLUME /var/lib/ssdb
-ENTRYPOINT /usr/bin/ssdb-server /etc/ssdb.conf
+ENTRYPOINT ["/usr/bin/ssdb-server","/etc/ssdb.conf"]
