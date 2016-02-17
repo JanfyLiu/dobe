@@ -34,3 +34,4 @@ dl:
 	wget https://pecl.php.net/get/gearman-1.1.2.tgz -O $(DL_DIR)gearman.tgz
 	wget https://getcomposer.org/composer.phar -O $(DL_DIR)composer.phar
 	wget https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.9.tar.gz -O $(DL_DIR)cphalcon.tgz
+	wget http://pecl.php.net/get/swoole-1.8.1.tgz -O $(DL_DIR)swoole.tgz
