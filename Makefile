@@ -2,17 +2,19 @@ NAME = dobe
 VERSION = 0.0.1
 DL_DIR = ./images/php/pkg/
 
+build:
+	docker build -t dobe_ssdb ./images/ssdb
+run:
+	docker run -i -p 10040:10040 -v ~/work:/opt -t dobe_ssdb /bin/bash
 install:
 	docker-compose build
 up:
 	docker-compose up -d
 restart:
-	docker-machine restart default      # Restart the environment
-	eval "$(docker-machine env default)"  # Refresh your environment settings
-
+	docker-machine restart default
+	eval "$(docker-machine env default)"
 rmi:
 	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
-
 pull:
 	docker pull nginx:1.9.0
 	docker pull php:5.6-fpm

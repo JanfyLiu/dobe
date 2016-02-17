@@ -1,0 +1,2 @@
+2016/02/05-22:14:31.171359 7fe5abc9e7c0 Recovering log #3
+2016/02/05-22:14:31.173444 7fe5abc9e7c0 MANIFEST write: IO error: /var/lib/ssdb/data: Invalid argument
