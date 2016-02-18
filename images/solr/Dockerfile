@@ -1,3 +1,3 @@
-FROM solr
+FROM solr:5.4.1
 
-EXPOSE 8937
+EXPOSE 8983

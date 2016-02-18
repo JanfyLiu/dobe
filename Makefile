@@ -15,16 +15,6 @@ restart:
 	eval "$(docker-machine env default)"
 rmi:
 	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
-pull:
-	docker pull nginx:1.9.0
-	docker pull php:5.6-fpm
-	docker pull memcached:1.4
-	docker pull mysql:5.6
-	docker pull node:4.2.4
-	docker pull redis:3.0
-	docker pull mongo:3.2
-	docker pull elasticsearch:2.1.0
-	docker pull wendal/ssdb
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(DL_DIR)memcached.tgz
 	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(DL_DIR)memcache.tgz

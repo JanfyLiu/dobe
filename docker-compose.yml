@@ -1,58 +1,70 @@
 nginx:
-    build: images/nginx
-    ports:
-        - "80:80"
-    links:
-        - "php"
-    volumes:
-        - ./conf/sites-enabled:/etc/nginx/conf.d
-        - ./volumes/logs/nginx:/var/log/nginx
-        - ~/work:/opt
-    env_file: .env
+  build: images/nginx
+  ports:
+    - "80:80"
+  links:
+    - "php"
+  volumes:
+    - ./conf/sites-enabled:/etc/nginx/conf.d
+    - ./volumes/logs/nginx:/var/log/nginx
+    - ~/work:/opt
+  env_file: .env
+
 php:
-    build: images/php
-    ports:
-        - "9000:9000"
-        - "9001:9001"
-    links:
-        - "mysql"
-        - "memcache"
-    volumes:
-        - ~/work:/opt
-    working_dir: /opt
-    env_file: .env
+  build: images/php
+  ports:
+    - "9000:9000"
+    - "9001:9001"
+  links:
+    - "mysql"
+    - "memcache"
+  volumes:
+    - ~/work:/opt
+  working_dir: /opt
+  env_file: .env
+
 node:
-   build: images/node
-   volumes:
-      - ~/work:/opt
-   working_dir: /opt
-   env_file: .env
+  build: images/node
+  volumes:
+    - ~/work:/opt
+  working_dir: /opt
+  env_file: .env
+
 memcache:
-    build: images/memcache
-    ports:
-        - "11211:11211"
+  build: images/memcache
+  ports:
+    - "11211:11211"
+
 mysql:
-    build: images/mysql
-    ports:
-        - "3306:3306"
-    volumes:
-        - ./volumes/data/mysql:/var/lib/mysql
-    env_file: .env
+  build: images/mysql
+  ports:
+    - "3306:3306"
+  volumes:
+    - ./volumes/data/mysql:/var/lib/mysql
+  env_file: .env
+
 mongo:
-    build: images/mongo
-    ports:
-        - "27017:27017"
+  build: images/mongo
+  ports:
+    - "27017:27017"
+
 ssdb:
-    build: images/ssdb
-    ports:
-        - "16379:16379"
-    env_file: .env
+  build: images/ssdb
+  ports:
+    - "16379:16379"
+  env_file: .env
+
 redis:
-   build: images/redis
-   ports:
-     - "6379:6379"
+  build: images/redis
+  ports:
+    - "6379:6379"
+solr:
+  build: images/solr
+  ports:
+    - "6379:6379"
+
 elasticsearch:
-   build: images/elasticsearch
-   ports:
-     - "9200:9200"
-     - "9300:9300"
+  build: images/elasticsearch
+  ports:
+    - "9200:9200"
+    - "9300:9300"
