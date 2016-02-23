@@ -1,5 +1,6 @@
-NAME = dobe
-VERSION = 0.0.1
+cmd_env = docker-machine env default
+cmd_ps = docker images | grep "<none>" | awk \"{print \$3}\"
+
 DL_DIR = ./images/php/pkg/
 
 build:
@@ -12,9 +13,9 @@ up:
 	docker-compose up -d
 restart:
 	docker-machine restart default
-	eval "$(docker-machine env default)"
+	$(cmd_env)
 rmi:
-	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
+	docker rmi -f $(eval $(cmd_ps))
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(DL_DIR)memcached.tgz
 	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(DL_DIR)memcache.tgz

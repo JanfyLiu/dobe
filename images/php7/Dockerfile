@@ -1,4 +1,4 @@
-FROM php:7.0.2-fpm
+FROM php:7.0.3-fpm
 
 # Install env
 COPY ./assets/* /tmp/
@@ -46,14 +46,11 @@ RUN pecl install /tmp/memcached.tgz \
         /tmp/msgpack.tgz \
         /tmp/xhprof.tgz \
         /tmp/xdebug.tgz \
+        /tmp/swoole.tgz \
         /tmp/mongo.tgz \
         /tmp/redis.tgz
-
-# Install phalcon
-RUN cd /home \
-    && tar -xvf /tmp/cphalcon.tgz \
-    && mv cphalcon-* phalcon \
-    && cd phalcon/build && ./install
+# enable ext
+# RUN docker-php-ext-enable memcached memcache apcu msgpack xhprof xdebug swoole mongo redis
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer \

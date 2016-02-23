@@ -45,6 +45,7 @@ RUN pecl install /tmp/xdebug.tgz
 RUN pecl install /tmp/mongo.tgz
 RUN pecl install /tmp/redis.tgz
 RUN pecl install /tmp/gearman.tgz
+RUN pecl install /tmp/swoole.tgz
 
 RUN cd /home \
     && tar -xvf /tmp/cphalcon.tgz \
@@ -60,10 +61,9 @@ COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 RUN cp /tmp/composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 
-WORKDIR /opt
-
 # Write Permission
 RUN usermod -u 1000 www-data
 
+WORKDIR /opt
 EXPOSE 9000 9001
 VOLUME ["/opt"]

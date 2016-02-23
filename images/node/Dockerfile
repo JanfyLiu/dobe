@@ -1,9 +1,15 @@
 FROM node:5.6
 
-RUN npm install -g cnpm gulp bower && npm cache clear
+#RUN npm install -g nodemon cnpm gulp bower && npm cache clear
+
+COPY server.js /opt/server.js
 
 WORKDIR /opt
 
-EXPOSE 8001
-
 VOLUME ["/opt"]
+
+#ENTRYPOINT [ "node", "server.js" ]
+
+#CMD ["npm", "start"]
+
+EXPOSE 8001
