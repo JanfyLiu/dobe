@@ -25,32 +25,32 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install zip \
-        intl \
-        gd \
-        bcmath \
-        iconv \
-        opcache \
-        tokenizer \
-        mbstring \
-        mcrypt \
-        pdo \
-        pdo_mysql \
-        pdo_sqlite \
-        pdo_pgsql
+    && docker-php-ext-install \
+      gd \
+      zip \
+      intl \
+      bcmath \
+      iconv \
+      opcache \
+      tokenizer \
+      mbstring \
+      mcrypt \
+      pdo \
+      pdo_mysql \
+      pdo_sqlite \
+      pdo_pgsql
 
-# Install PHP extensions (OR docker-php-pecl-install)
-RUN pecl install /tmp/memcached.tgz \
-        /tmp/memcache.tgz \
-        /tmp/apcu.tgz \
-        /tmp/msgpack.tgz \
-        /tmp/xhprof.tgz \
-        /tmp/xdebug.tgz \
-        /tmp/swoole.tgz \
-        /tmp/mongo.tgz \
-        /tmp/redis.tgz
-# enable ext
-# RUN docker-php-ext-enable memcached memcache apcu msgpack xhprof xdebug swoole mongo redis
+# Install PHP extensions (OR docker-php-pecl-install docker-php-ext-enable )
+RUN pecl install \
+      /tmp/memcached.tgz \
+      /tmp/memcache.tgz \
+      /tmp/apcu.tgz \
+      /tmp/msgpack.tgz \
+      /tmp/xhprof.tgz \
+      /tmp/xdebug.tgz \
+      /tmp/swoole.tgz \
+      /tmp/mongo.tgz \
+      /tmp/redis.tgz
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer \
