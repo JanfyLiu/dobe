@@ -1,7 +1,4 @@
-cmd_env = docker-machine env default
-cmd_ps = docker images | grep "<none>" | awk \"{print \$3}\"
-
-DL_DIR = ./images/php/pkg/
+ASSETS = ./images/php/pkg/
 
 build:
 	docker build -t dobe_ssdb ./images/ssdb
@@ -12,20 +9,19 @@ install:
 up:
 	docker-compose up -d
 restart:
-	docker-machine restart default
-	$(cmd_env)
+	docker-machine restart default && eval "$(docker-machine env default)"
 rmi:
-	docker rmi -f $(eval $(cmd_ps))
+	docker rmi -f $(docker images -a | grep "<none>" | awk "{print \$3}")
 dl:
-	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(DL_DIR)memcached.tgz
-	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(DL_DIR)memcache.tgz
-	wget https://pecl.php.net/get/apcu-4.0.10.tgz -O $(DL_DIR)apcu.tgz
-	wget https://pecl.php.net/get/msgpack-0.5.6.tgz -O $(DL_DIR)msgpack.tgz
-	wget https://pecl.php.net/get/xdebug-2.3.3.tgz -O $(DL_DIR)xdebug.tgz
-	wget https://pecl.php.net/get/xhprof-0.9.4.tgz -O $(DL_DIR)xhprof.tgz
-	wget https://pecl.php.net/get/mongo-1.6.0.tgz -O $(DL_DIR)mongo.tgz
-	wget https://pecl.php.net/get/redis-2.2.7.tgz -O $(DL_DIR)redis.tgz
-	wget https://pecl.php.net/get/gearman-1.1.2.tgz -O $(DL_DIR)gearman.tgz
-	wget https://getcomposer.org/composer.phar -O $(DL_DIR)composer.phar
-	wget https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.9.tar.gz -O $(DL_DIR)cphalcon.tgz
-	wget http://pecl.php.net/get/swoole-1.8.1.tgz -O $(DL_DIR)swoole.tgz
+	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(ASSETS)memcached.tgz
+	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(ASSETS)memcache.tgz
+	wget https://pecl.php.net/get/apcu-4.0.10.tgz -O $(ASSETS)apcu.tgz
+	wget https://pecl.php.net/get/msgpack-0.5.6.tgz -O $(ASSETS)msgpack.tgz
+	wget https://pecl.php.net/get/xdebug-2.3.3.tgz -O $(ASSETS)xdebug.tgz
+	wget https://pecl.php.net/get/xhprof-0.9.4.tgz -O $(ASSETS)xhprof.tgz
+	wget https://pecl.php.net/get/mongo-1.6.0.tgz -O $(ASSETS)mongo.tgz
+	wget https://pecl.php.net/get/redis-2.2.7.tgz -O $(ASSETS)redis.tgz
+	wget https://pecl.php.net/get/gearman-1.1.2.tgz -O $(ASSETS)gearman.tgz
+	wget https://getcomposer.org/composer.phar -O $(ASSETS)composer.phar
+	wget https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.9.tar.gz -O $(ASSETS)cphalcon.tgz
+	wget http://pecl.php.net/get/swoole-1.8.1.tgz -O $(ASSETS)swoole.tgz
