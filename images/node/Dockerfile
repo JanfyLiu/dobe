@@ -1,15 +1,19 @@
-FROM node:5.6
+FROM node:4.3.1
 
-#RUN npm install -g nodemon cnpm gulp bower && npm cache clear
+RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
-COPY server.js /opt/server.js
+# Write Permission
+RUN chmod 755 /opt/
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+
+EXPOSE 8080
 
 WORKDIR /opt
 
 VOLUME ["/opt"]
 
-#ENTRYPOINT [ "node", "server.js" ]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 #CMD ["npm", "start"]
-
-EXPOSE 8001
