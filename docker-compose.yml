@@ -35,7 +35,7 @@ node:
   volumes:
     - ~/work:/opt
   ports:
-    - "8001:8001"
+    - "8080:8080"
   working_dir: /opt
   env_file: .env
 
