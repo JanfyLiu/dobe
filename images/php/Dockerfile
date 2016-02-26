@@ -60,8 +60,6 @@ RUN pecl install \
     /tmp/gearman.tgz \
     /tmp/swoole.tgz
 
-#RUN cd /usr/src/php/ext/pcntl && phpize && ./configure && make && make install
-
 RUN cd /home \
     && tar -xvf /tmp/cphalcon.tgz \
     && mv cphalcon-* phalcon \
@@ -72,6 +70,9 @@ COPY ./php.ini /usr/local/etc/php/php.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 COPY ./supervisord.conf /etc/supervisor/conf.d/
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer
@@ -86,4 +87,4 @@ WORKDIR /opt
 
 VOLUME ["/opt"]
 
-# ENTRYPOINT ["/usr/bin/supervisord"]
+# ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
