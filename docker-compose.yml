@@ -2,6 +2,7 @@ nginx:
   build: images/nginx
   ports:
     - "80:80"
+    - "8880:8880"
   links:
     - php:php
   volumes:
@@ -20,15 +21,15 @@ php:
   working_dir: /opt
   env_file: .env
 
-# php:
-#   build: images/php7
-#   ports:
-#     - "9000:9000"
-#     - "9001:9001"
-#   volumes:
-#     - ~/work:/opt
-#   working_dir: /opt
-#   env_file: .env
+php7:
+  build: images/php7
+  ports:
+    - "9007:9000"
+    - "9008:9001"
+  volumes:
+    - ~/work:/opt
+  working_dir: /opt
+  env_file: .env
 
 node:
   build: images/node
@@ -67,13 +68,23 @@ redis:
   build: images/redis
   ports:
     - "6379:6379"
-# solr:
-#   build: images/solr
-#   ports:
-#     - "8983:8983"
+
+solr:
+  build: images/solr
+  ports:
+    - "8983:8983"
 
 elasticsearch:
   build: images/elasticsearch
   ports:
     - "9200:9200"
     - "9300:9300"
+
+banyandb:
+  build: images/banyandb
+  volumes:
+    - ~/work:/opt
+  ports:
+    - "1026:1026"
+  working_dir: /opt
+  env_file: .env

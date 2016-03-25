@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
       lrzsz \
       vim \
       graphviz\
+      sqlite3 \
       imagemagick \
       graphicsmagick \
       libgearman-dev \
@@ -69,7 +70,10 @@ RUN cd /home \
 COPY ./php.ini /usr/local/etc/php/php.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
-COPY ./supervisord.conf /etc/supervisor/conf.d/
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Write Permission
+RUN usermod -u 1000 www-data
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
@@ -78,13 +82,10 @@ RUN chmod 755 /entrypoint.sh
 RUN cp /tmp/composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 
-# Write Permission
-RUN usermod -u 1000 www-data
+#ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 EXPOSE 9000 9001
 
 WORKDIR /opt
 
 VOLUME ["/opt"]
-
-# ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

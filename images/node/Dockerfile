@@ -8,12 +8,12 @@ RUN chmod 755 /opt/
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
-EXPOSE 8080
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+
+#CMD ["npm", "start"]
 
 WORKDIR /opt
 
 VOLUME ["/opt"]
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-
-#CMD ["npm", "start"]
+EXPOSE 8080

@@ -1,4 +1,9 @@
 #!/bin/bash
 
 # start all the services
-# /usr/local/bin/supervisord -n
+echo 'start all the services';
+
+#
+/usr/bin/supervisord -n
+#
+supervisorctl start laravel-worker:*
