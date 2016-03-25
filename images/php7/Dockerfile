@@ -67,5 +67,7 @@ RUN usermod -u 1000 www-data
 CMD ["php-fpm", "-F"]
 
 WORKDIR /opt
-EXPOSE 9000 9001
+
 VOLUME ["/opt"]
+
+EXPOSE 9000 9001
