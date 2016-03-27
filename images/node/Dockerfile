@@ -12,8 +12,8 @@ ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 #CMD ["npm", "start"]
 
-WORKDIR /opt
+WORKDIR $WORK_DIR
 
-VOLUME ["/opt"]
+VOLUME ["$WORK_DIR"]
 
 EXPOSE 8080

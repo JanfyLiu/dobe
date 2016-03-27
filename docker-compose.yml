@@ -80,11 +80,11 @@ elasticsearch:
     - "9200:9200"
     - "9300:9300"
 
-banyandb:
-  build: images/banyandb
-  volumes:
-    - ~/work:/opt
-  ports:
-    - "1026:1026"
-  working_dir: /opt
-  env_file: .env
+# banyandb:
+#   build: images/banyandb
+#   volumes:
+#     - ~/work:/opt
+#   ports:
+#     - "1026:1026"
+#   working_dir: /opt
+#   env_file: .env

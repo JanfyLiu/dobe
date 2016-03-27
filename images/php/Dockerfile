@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y \
       libpng12-dev \
       libicu-dev \
       supervisor \
+      nodejs \
+      npm \
       && apt-get clean && rm -r /var/lib/apt/lists/*
 
 # Install modules
@@ -71,21 +73,21 @@ COPY ./php.ini /usr/local/etc/php/php.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./entrypoint.sh /entrypoint.sh
 
 # Write Permission
 RUN usermod -u 1000 www-data
-
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+#RUN chmod 755 /entrypoint.sh
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer
-RUN chmod 755 /usr/local/bin/composer
+#RUN chmod 755 /usr/local/bin/composer
+RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
 #ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 EXPOSE 9000 9001
 
-WORKDIR /opt
+WORKDIR $WORK_DIR
 
-VOLUME ["/opt"]
+VOLUME ["$WORK_DIR"]
