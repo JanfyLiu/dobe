@@ -3,7 +3,7 @@ FROM node:4.3.1
 RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
 # Write Permission
-RUN chmod 755 /opt/
+RUN usermod -u 1000 www-data
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
@@ -12,8 +12,8 @@ ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 #CMD ["npm", "start"]
 
-WORKDIR $WORK_DIR
+WORKDIR /opt
 
-VOLUME ["$WORK_DIR"]
+VOLUME ["/opt"]
 
 EXPOSE 8080

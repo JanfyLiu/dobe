@@ -1,5 +1,7 @@
 FROM php:5.6-fpm
 
+ENV NODE_VERSION=5.9.1
+
 # Install env
 COPY ./pkg/* /tmp/
 RUN cp /tmp/sources.list /etc/apt/sources.list
@@ -26,15 +28,14 @@ RUN apt-get update && apt-get install -y \
       libpng12-dev \
       libicu-dev \
       supervisor \
-      nodejs \
-      npm \
-      && apt-get clean && rm -r /var/lib/apt/lists/*
+      npm && \
+      apt-get clean && rm -r /var/lib/apt/lists/*
 
 # Install modules
 RUN docker-php-ext-configure gd \
       --with-freetype-dir=/usr/include/ \
-      --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install \
+      --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install \
       gd \
       zip \
       intl \
@@ -63,10 +64,23 @@ RUN pecl install \
     /tmp/gearman.tgz \
     /tmp/swoole.tgz
 
-RUN cd /home \
-    && tar -xvf /tmp/cphalcon.tgz \
-    && mv cphalcon-* phalcon \
-    && cd phalcon/build && ./install
+# Install Composer
+RUN cp /tmp/composer.phar /usr/local/bin/composer
+
+# Install phalcon
+RUN cd /home && \
+    tar -xvf /tmp/cphalcon.tgz && \
+    mv cphalcon-* phalcon && \
+    cd phalcon/build && ./install
+
+# Install node
+RUN cd /home && \
+  tar -xvf /tmp/node.tgz && \
+  mv node-* node && \
+  cd /usr/local/bin && \
+  ln -s /home/node/bin/* . 
+
+# RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini
@@ -77,17 +91,11 @@ COPY ./entrypoint.sh /entrypoint.sh
 
 # Write Permission
 RUN usermod -u 1000 www-data
-#RUN chmod 755 /entrypoint.sh
-
-# Install Composer
-RUN cp /tmp/composer.phar /usr/local/bin/composer
-#RUN chmod 755 /usr/local/bin/composer
-RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
 #ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
-EXPOSE 9000 9001
+WORKDIR /opt
 
-WORKDIR $WORK_DIR
+VOLUME ["/opt"]
 
-VOLUME ["$WORK_DIR"]
+EXPOSE 9000 9001 8080

@@ -2,7 +2,6 @@ nginx:
   build: images/nginx
   ports:
     - "80:80"
-    - "8880:8880"
   links:
     - php:php
   volumes:
@@ -16,6 +15,7 @@ php:
   ports:
     - "9000:9000"
     - "9001:9001"
+    - "3000:8080"
   volumes:
     - ~/work:/opt
   working_dir: /opt

@@ -27,3 +27,4 @@ dl:
 	wget https://getcomposer.org/composer.phar -O $(ASSETS)composer.phar
 	wget https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.9.tar.gz -O $(ASSETS)cphalcon.tgz
 	wget http://pecl.php.net/get/swoole-1.8.1.tgz -O $(ASSETS)swoole.tgz
+	wget http://nodejs.org/dist/v5.9.1/node-v5.9.1-linux-x64.tar.gz -O $(ASSETS)node.tgz
