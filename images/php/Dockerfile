@@ -78,7 +78,7 @@ RUN cd /home && \
   tar -xvf /tmp/node.tgz && \
   mv node-* node && \
   cd /usr/local/bin && \
-  ln -s /home/node/bin/* . 
+  ln -s /home/node/bin/* .
 
 # RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
@@ -91,6 +91,7 @@ COPY ./entrypoint.sh /entrypoint.sh
 
 # Write Permission
 RUN usermod -u 1000 www-data
+RUN chmod 777 /usr/local/bin/composer /entrypoint.sh
 
 #ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
