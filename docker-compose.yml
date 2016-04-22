@@ -2,6 +2,7 @@ nginx:
   build: images/nginx
   ports:
     - "80:80"
+    - "443:443"
   links:
     - php:php
   volumes:

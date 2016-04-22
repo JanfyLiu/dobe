@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
       curl \
       make \
       autoconf \
+      automake \
+      openssl \
       lrzsz \
       vim \
       graphviz\
@@ -28,6 +30,7 @@ RUN apt-get update && apt-get install -y \
       libpng12-dev \
       libicu-dev \
       supervisor \
+      nodejs \
       npm && \
       apt-get clean && rm -r /var/lib/apt/lists/*
 
@@ -46,6 +49,7 @@ RUN docker-php-ext-configure gd \
       tokenizer \
       mbstring \
       mcrypt \
+      sockets \
       pdo \
       pdo_mysql \
       pdo_sqlite \
@@ -64,23 +68,23 @@ RUN pecl install \
     /tmp/gearman.tgz \
     /tmp/swoole.tgz
 
-# Install Composer
-RUN cp /tmp/composer.phar /usr/local/bin/composer
+# Install Extensions
+RUN cd /home && \
+    git clone https://github.com/aerospike/aerospike-client-php.git && \
+    cd aerospike-client-php/src/aerospike && ./build.sh  &&  make install
+RUN cd /home && \
+    git clone https://github.com/kjdev/php-ext-lz4.git && \
+    cd ./php-ext-lz4 && phpize && ./configure && make && make install
 
 # Install phalcon
-RUN cd /home && \
-    tar -xvf /tmp/cphalcon.tgz && \
-    mv cphalcon-* phalcon && \
-    cd phalcon/build && ./install
+RUN cd /home && tar -xvf /tmp/cphalcon.tgz && mv cphalcon-* phalcon && cd phalcon/build && ./install
 
 # Install node
-RUN cd /home && \
-  tar -xvf /tmp/node.tgz && \
-  mv node-* node && \
-  cd /usr/local/bin && \
-  ln -s /home/node/bin/* .
+# RUN cd /home && tar -xvf /tmp/node.tgz && mv node-* node && cd /usr/local/bin && ln -s /home/node/bin/* .
+RUN npm install -g nodemon cnpm gulp bower && npm cache clear
 
-# RUN npm install -g nodemon cnpm gulp bower && npm cache clear
+# Install Composer
+RUN cp /tmp/composer.phar /usr/local/bin/composer
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini

@@ -13,7 +13,7 @@ restart:
 rmi:
 	docker rmi -f $(docker images -a | grep "<none>" | awk "{print \$3}")
 php:
-	bash -c "clear && DOCKER_HOST=tcp://192.168.99.100:2376 DOCKER_CERT_PATH=/Users/in10/.docker/machine/machines/default DOCKER_TLS_VERIFY=1 docker exec -it dobe_php_1 bash"
+	bash -c "clear && DOCKER_HOST=tcp://192.168.99.100:2376 DOCKER_CERT_PATH=~/.docker/machine/machines/default DOCKER_TLS_VERIFY=1 docker exec -it dobe_php_1 bash"
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(ASSETS)memcached.tgz
 	wget https://pecl.php.net/get/memcache-3.0.8.tgz -O $(ASSETS)memcache.tgz

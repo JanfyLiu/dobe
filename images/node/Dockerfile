@@ -8,7 +8,7 @@ RUN usermod -u 1000 www-data
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+#ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 #CMD ["npm", "start"]
 
