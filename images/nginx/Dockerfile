@@ -6,4 +6,5 @@ COPY ./ssl/* /usr/local/nginx/conf/
 RUN chown -R www-data.www-data /opt
 
 VOLUME ["/opt", "/var/log/nginx", "/etc/nginx/conf.d"]
+
 EXPOSE 80 443

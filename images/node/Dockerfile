@@ -1,16 +1,11 @@
-FROM node:4.3.1
-
-RUN npm install -g nodemon cnpm gulp bower && npm cache clear
-
-# Write Permission
-RUN usermod -u 1000 www-data
+FROM node:6.0.0
 
 COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 
-#ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
-#CMD ["npm", "start"]
+CMD ["npm", "start"]
 
 WORKDIR /opt
 

@@ -1,60 +1,60 @@
-FROM php:7.0.3-fpm
+FROM php:7.0.6-fpm
 
 # Install env
-COPY ./assets/* /tmp/
+COPY ./pkg/* /tmp/
 RUN cp /tmp/sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
-        git \
-        g++ \
-        wget \
-        curl \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng12-dev \
-        libicu-dev \
-        libmcrypt-dev \
-        libmemcached-dev \
-        libsqlite3-dev \
-        libpq-dev \
-        imagemagick \
-        graphicsmagick \
-        graphviz \
-        && apt-get clean && rm -r /var/lib/apt/lists/*
+    git \
+    wget \
+    openssl \
+    vim \
+    graphviz\
+    imagemagick \
+    graphicsmagick \
+    libc6-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng12-dev \
+    libicu-dev \
+    libmcrypt-dev \
+    libmemcached-dev \
+    libpq-dev \
+    --no-install-recommends \
+    && apt-get clean && rm -r /var/lib/apt/lists/*
+
+# Install PHP extensions (OR docker-php-ext-enable )
+#RUN pecl install /tmp/memcached.tgz
+RUN pecl install /tmp/memcache.tgz
+RUN pecl install /tmp/msgpack.tgz
+RUN pecl install /tmp/xdebug.tgz
+RUN pecl install /tmp/apcu.tgz
+RUN pecl install /tmp/swoole.tgz
+#RUN pecl install /tmp/redis.tgz
+#RUN pecl install /tmp/mongo.tgz
+#RUN pecl install /tmp/xhprof.tgz
 
 # Install modules
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \
-      gd \
-      zip \
-      intl \
-      bcmath \
-      iconv \
-      opcache \
-      tokenizer \
-      mbstring \
-      mcrypt \
-      pdo \
-      pdo_mysql \
-      pdo_sqlite \
-      pdo_pgsql
-
-# Install PHP extensions (OR docker-php-pecl-install docker-php-ext-enable )
-RUN pecl install \
-      /tmp/memcached.tgz \
-      /tmp/memcache.tgz \
-      /tmp/apcu.tgz \
-      /tmp/msgpack.tgz \
-      /tmp/xhprof.tgz \
-      /tmp/xdebug.tgz \
-      /tmp/swoole.tgz \
-      /tmp/mongo.tgz \
-      /tmp/redis.tgz
+        gd \
+        zip \
+        intl \
+        pcntl \
+        bcmath \
+        iconv \
+        opcache \
+        tokenizer \
+        mcrypt \
+        pdo \
+        pdo_mysql \
+        pdo_pgsql \
+        sockets
 
 # Install Composer
-RUN cp /tmp/composer.phar /usr/local/bin/composer \
-    && chmod 755 /usr/local/bin/composer
+#RUN curl -sS https://getcomposer.org/installer | php && chmod 755 /usr/local/bin/composer
+RUN cp /tmp/composer.phar /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
 
 # PHP Config
 COPY ./php.ini /usr/local/etc/php/php.ini
@@ -63,8 +63,6 @@ COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 
 # Write Permission
 RUN usermod -u 1000 www-data
-
-CMD ["php-fpm", "-F"]
 
 WORKDIR /opt
 
