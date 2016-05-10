@@ -7,9 +7,6 @@ RUN cp /tmp/sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
       git \
       wget \
-      autoconf \
-      automake \
-      openssl \
       vim \
       sqlite3 \
       graphviz\
@@ -49,6 +46,9 @@ RUN docker-php-ext-configure gd \
       pdo_pgsql \
       sockets
 
+# Install PHP extensions
+COPY ./ext/* /usr/local/lib/php/extensions/no-debug-non-zts-20131226/
+
 # Install PHP extensions (OR docker-php-pecl-install)
 #RUN pecl install /tmp/memcached.tgz
 #RUN pecl install /tmp/memcache.tgz
@@ -60,14 +60,13 @@ RUN docker-php-ext-configure gd \
 #RUN pecl install /tmp/redis.tgz
 #RUN pecl install /tmp/gearman.tgz
 #RUN pecl install /tmp/swoole.tgz
+RUN pecl install /tmp/yaf.tgz
 
 #RUN cd /home && tar -xvf /tmp/cphalcon.tgz && mv cphalcon-* phalcon && cd phalcon/build && ./install
 #RUN cd /home && tar -xvf /tmp/node.tgz && mv node-* node && cd /usr/local/bin && ln -s /home/node/bin/* .
 #RUN cd /home && git clone https://github.com/kjdev/php-ext-lz4.git && cd ./php-ext-lz4 && phpize && ./configure && make && make install
 #RUN cd /home && git clone https://github.com/aerospike/aerospike-client-php.git && cd aerospike-client-php/src/aerospike && ./build.sh && make install
 
-# Install ext
-COPY ./ext/* /usr/local/lib/php/extensions/no-debug-non-zts-20131226/
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini
