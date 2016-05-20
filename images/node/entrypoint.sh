@@ -6,3 +6,5 @@ npm install -g nodemon cnpm gulp bower eslint eslint-plugin-react --registry=htt
 # start all the services
 cd /opt/inc/res && npm install
 cd /opt/inc/res && ./server.sh
+
+exec "$@"
