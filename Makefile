@@ -20,6 +20,7 @@ pull:
 	docker-machine ssh default $(IMAGES_PULL)
 
 install:
+	docker-machine ssh default $(IMAGES_PULL)
 	docker-compose build
 
 up:
@@ -33,6 +34,12 @@ rmi:
 
 php:
 	clear && docker exec -it dobe_php_1 bash
+
+httpd:
+	clear && docker exec -it dobe_php_1 php youzan/scrm-web/bin/httpd
+
+nova:
+	clear && docker exec -it dobe_php_1 php youzan/scrm-api/bin/nova
 
 php7:
 	clear && docker exec -it dobe_php7_1 bash

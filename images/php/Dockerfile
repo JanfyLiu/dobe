@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
       libpng12-dev \
       libicu-dev \
       libmysqld-dev \
-      php5-dev \
+      libmysqlclient-dev \
       supervisor \
       nodejs && \
       apt-get clean && rm -r /var/lib/apt/lists/*
@@ -73,9 +73,16 @@ RUN pecl install yaf
 #RUN cd /home && git clone https://github.com/aerospike/aerospike-client-php.git && cd aerospike-client-php/src/aerospike && ./build.sh && make install
 RUN cd /home && git clone http://git.qima-inc.com/platform/yz-swoole.git \
     && cd yz-swoole/swoole-extension && phpize \
-    && ./configure --enable-async-mysql=/usr/include/mysql --enable-async-httpclient --enable-aerospike --enable-sockets=/usr/local/include/php/ext/sockets/ \
+    && ./configure --enable-async-mysql=/usr/local/include/php/ext/mysqli --enable-async-httpclient --enable-aerospike --enable-sockets=/usr/local/include/php/ext/sockets/ \
     && make && make install
 
+# Install Composer
+RUN cp /tmp/composer.phar /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+    && composer global require "phpunit/phpunit:^5.2" \
+    && composer global require "mockery/mockery:^0.9.4"
+#ENV PATH /root/.composer/vendor/bin:$PATH
+RUN ln -s /root/.composer/vendor/bin/phpunit /usr/bin/phpunit
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini
@@ -85,19 +92,16 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-# Install Composer
-RUN cp /tmp/composer.phar /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
-
 
 # Write Permission
 RUN usermod -u 1000 www-data
 
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["echo","CMD"]
+#CMD ["echo","CMD"]
 
 WORKDIR /opt
 
-VOLUME ["/opt"]
+VOLUME ["/opt","/var/log"]
 
 EXPOSE 9000 9001 8000

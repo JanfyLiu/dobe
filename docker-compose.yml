@@ -19,6 +19,7 @@ php:
     - 9001:9001
     - 8000:8000
   volumes:
+    - ./volumes/logs/php:/var/log
     - ~/work:/opt
   working_dir: /opt
   env_file: .env
