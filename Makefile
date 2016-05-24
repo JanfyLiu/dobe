@@ -4,6 +4,7 @@ ASSETS = ./images/php/pkg/
 DAOMONIT = curl -sSL https://get.daocloud.io/daomonit/install.sh | sh -s 433eaf4bd42e6fd80c3de4a1f9758b6b4d7afb1f
 # 加速pull image
 IMAGES_PULL = "$(DAOMONIT)\
+&& dao pull debian:jessie \
 && dao pull ubuntu:14.04 \
 && dao pull elasticsearch:2.1.0 \
 && dao pull memcached:1.4 \
@@ -36,10 +37,10 @@ php:
 	clear && docker exec -it dobe_php_1 bash
 
 httpd:
-	clear && docker exec -it dobe_php_1 php youzan/scrm-web/bin/httpd
+	clear && docker exec -it dobe_php5_1 php youzan/scrm-web/bin/httpd
 
 nova:
-	clear && docker exec -it dobe_php_1 php youzan/scrm-api/bin/nova
+	clear && docker exec -it dobe_php5_1 php youzan/scrm-api/bin/nova
 
 php7:
 	clear && docker exec -it dobe_php7_1 bash
