@@ -9,7 +9,7 @@ if [[ "$(docker images -q dobe_php5)" == "" ]]; then
     docker build -t dobe_php5 ${DIR}/../images/php5/
 fi
 
-if [["$(docker ps | grep 'phpunit' | awk \"{print \$1}\")" == ""]]; then
+if [["$(docker ps | grep 'phpunit' | awk \"{print \$1}\")" != ""]]; then
     docker rm -f $(docker ps | grep 'phpunit' | awk "{print \$1}")
 fi
 
