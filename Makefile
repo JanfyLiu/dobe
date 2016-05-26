@@ -36,6 +36,9 @@ rmi:
 php:
 	clear && docker exec -it dobe_php_1 bash
 
+php5:
+	clear && docker exec -it dobe_php5_1 bash
+
 httpd:
 	clear && docker exec -it dobe_php5_1 php youzan/scrm-web/bin/httpd
 

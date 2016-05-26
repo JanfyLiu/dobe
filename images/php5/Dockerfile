@@ -211,6 +211,7 @@ COPY ./extension.ini /usr/local/etc/php/conf.d/extension.ini
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+RUN mkdir -p /private
 
 # Write Permission
 RUN usermod -u 1000 www-data
@@ -221,6 +222,6 @@ CMD ["php-fpm"]
 
 WORKDIR /opt
 
-VOLUME ["/opt","/var/log"]
+VOLUME ["/opt","/var/log","/private"]
 
 EXPOSE 9000 9001 8000

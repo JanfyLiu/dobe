@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+#more see https://github.com/michalmatoga/phpstorm-docker-interpreter
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#cd "$DIR/../../" # force phpstorm to sit in project's root dir when running tests
+eval $(docker-machine env default)
+if [[ "$(docker images -q dobe_php5)" == "" ]]; then
+    docker build -t dobe_php5 ${DIR}/../images/php5/
+fi
+
+if [["$(docker ps | grep 'phpunit' | awk \"{print \$1}\")" == ""]]; then
+    docker rm -f $(docker ps | grep 'phpunit' | awk "{print \$1}")
+fi
+
+docker run -i --rm --net=host -w "${PWD}" -v "${PWD}":"${PWD}" -v "/private":"/private" \
+--name="phpunit" dobe_php5 php -d include_path=/root/.composer/vendor/phpunit/phpunit "$@"
+
+
+#docker run --rm --sig-proxy=true -v ${PWD}:${PWD} -w ${PWD} --pid=host dobe_php php "$@"
+
+#docker exec -i dobe_php_1 phpunit "$@"
+
+#docker run -i --rm -v "${PWD}":"${PWD}" -v /tmp/:/tmp/ -w ${PWD} --net=host --sig-proxy=true --pid=host dobe_php5 php "$@"

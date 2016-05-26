@@ -31,6 +31,7 @@ php5:
     - 9006:9001
     - 8007:8000
   volumes:
+    - /private:/private
     - ./volumes/logs/php:/var/log
     - ~/work:/opt
   working_dir: /opt
