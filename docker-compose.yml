@@ -5,6 +5,7 @@ nginx:
     - 443:443
   links:
     - php:php
+    - php5:php5
     - php7:php7
   volumes:
     - ./conf/sites-enabled:/etc/nginx/conf.d

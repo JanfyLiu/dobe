@@ -5,16 +5,30 @@
 # 初始化docker
 eval $(docker-machine env default)
 
+
+#on VB:
+#VBoxManage sharedfolder add <machine name="" id=""> --name private_folders --hostpath /private/var/folders --automount
+
+#in the docker-machine
+#VBOX_CMD="sudo mkdir -p /private/var/folders && sudo mount -t vboxsf -o defaults,uid=`id -u docker`,gid=`id -g docker` private_folders /private/var/folders && exit"
+#docker-machine ssh default ${VBOX_CMD}
+
 # 如果images不存在就构建
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [[ "$(docker images -q dobe_php5)" == "" ]]; then
-    docker build -t dobe_php5 ${DIR}/../images/php5/
-fi
+[ "$(docker images -q dobe_php5)" == "" ] && docker build -t dobe_php5 ${DIR}/../images/php5/
 
 # 如果同名的容器存在就删除
-CMD=$(docker ps | grep 'phpunit' | awk "{print \$1}")
-[ "" != "${CMD}" ] && docker rm -f ${CMD}
+CONTAINER_CMD=$(docker ps | grep 'phpunit' | awk "{print \$1}")
+[ "" != "${CONTAINER_CMD}" ] && docker rm -f ${CONTAINER_CMD}
+
+# --add-host='fenxiao.api.youzan.com:192.168.99.100' \
+# --add-host='trade.api.youzan.com:192.168.99.100' \
+# --add-host='ump.api.youzan.com:192.168.99.100' \
+# --add-host='goods.api.youzan.com:192.168.99.100' \
+# --add-host='showcase.api.youzan.com:192.168.99.100' \
+# --add-host='cp.api.youzan.com:192.168.99.100' \
 
 # 容器内执行php
-docker run -i --rm --net=host -w "${PWD}" -v "${PWD}":"${PWD}" -v "/private":"/private" \
---name="phpunit" dobe_php5 php -d include_path=/root/.composer/vendor/phpunit/phpunit "$@"
+docker run -i --rm -w "${PWD}" -v "${PWD}":"${PWD}" -v '/private':'/private' \
+--net=host --sig-proxy=true --pid=host --name="phpunit" \
+dobe_php5 php -d include_path=/root/.composer/vendor/phpunit/phpunit "$@"

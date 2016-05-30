@@ -19,25 +19,30 @@ IMAGES_PULL = "$(DAOMONIT)\
 
 pull:
 	docker-machine ssh default $(IMAGES_PULL)
-
 install:
 	docker-machine ssh default $(IMAGES_PULL)
 	docker-compose build
-
+build:
+	docker build -t dobe_ssdb ./images/ssdb
+run:
+	docker run -p 16379:16379 -v ./volumes/data/ssdb:/var/lib/ssdb -it dobe_ssdb /bin/bash
 up:
 	docker-compose up -d
-
 restart:
 	docker-machine restart default && eval $(shell docker-machine env default)
-
+stop:
+	docker-compose stop
 rmi:
 	docker rmi -f $(docker images -a | grep '<none>' | awk "{print \$3}")
 
 php:
 	clear && docker exec -it dobe_php_1 bash
-
 php5:
 	clear && docker exec -it dobe_php5_1 bash
+php7:
+	clear && docker exec -it dobe_php7_1 bash
+node:
+	clear && docker exec -it dobe_node_1 bash
 
 httpd:
 	clear && docker exec -it dobe_php5_1 php youzan/scrm-web/bin/httpd
@@ -45,17 +50,6 @@ httpd:
 nova:
 	clear && docker exec -it dobe_php5_1 php youzan/scrm-api/bin/nova
 
-php7:
-	clear && docker exec -it dobe_php7_1 bash
-
-node:
-	clear && docker exec -it dobe_node_1 bash
-
-build:
-	docker build -t dobe_ssdb ./images/ssdb
-
-run:
-	docker run -p 16379:16379 -v ./volumes/data/ssdb:/var/lib/ssdb -it dobe_ssdb /bin/bash
 
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(ASSETS)memcached.tgz
