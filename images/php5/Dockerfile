@@ -190,7 +190,9 @@ RUN pecl install yaf
 #    cd aerospike-client-php/src/aerospike && ./build.sh && make install
 RUN cd /home && git clone http://git.qima-inc.com/platform/yz-swoole.git && \
     cd yz-swoole/swoole-extension && phpize && \
-    ./configure  --enable-async-httpclient --enable-aerospike --enable-async-mysql --enable-sockets && \
+    ./configure  --enable-async-httpclient --enable-async-mysql --enable-sockets \
+#	--enable-aerospike \
+	&& \
     make && make install
 
 # Install Composer
@@ -210,6 +212,9 @@ COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 RUN mkdir -p /private
 
+#ADD ./hosts /tmp/
+#RUN cat /tmp/hosts >> /etc/hosts && cat /etc/hosts
+
 # Write Permission
 RUN usermod -u 1000 www-data
 
@@ -221,4 +226,4 @@ WORKDIR /opt
 
 VOLUME ["/opt","/var/log","/private"]
 
-EXPOSE 9000 9001 8000
+EXPOSE 9000 9001 8000 8100

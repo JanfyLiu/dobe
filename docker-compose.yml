@@ -1,52 +1,51 @@
-nginx:
-  build: images/nginx
-  ports:
-    - 80:80
-    - 443:443
-  links:
-    - php:php
-    - php5:php5
-    - php7:php7
-  volumes:
-    - ./conf/sites-enabled:/etc/nginx/conf.d
-    - ./volumes/logs/nginx:/var/log/nginx
-    - ~/work:/opt
-  env_file: .env
+version: '2'
 
-php:
-  build: images/php
-  ports:
-    - 9000:9000
-    - 9001:9001
-    - 8000:8000
-  volumes:
-    - ./volumes/logs/php:/var/log
-    - ~/work:/opt
-  working_dir: /opt
-  env_file: .env
+services:
+    nginx:
+        build: ./images/nginx
+        container_name: nginx
+        restart: always
+        network_mode: host
+        depends_on:
+            - php5
+        volumes:
+            - ./conf/sites-enabled:/etc/nginx/conf.d
+            - ./volumes/logs/nginx:/var/log/nginx
+            - ~/work:/opt
+        env_file: .env
+    php5:
+        build: ./images/php5
+        container_name: php5
+        restart: always
+        network_mode: host
+        volumes:
+            - /private:/private
+            - ./volumes/logs/php:/var/log
+            - ~/work:/opt
+        working_dir: /opt
+        env_file: .env
 
-php5:
-  build: images/php5
-  ports:
-    - 9005:9000
-    - 9006:9001
-    - 8007:8000
-  volumes:
-    - /private:/private
-    - ./volumes/logs/php:/var/log
-    - ~/work:/opt
-  working_dir: /opt
-  env_file: .env
+# php:
+#   build: images/php
+#   ports:
+#     - 9000:9000
+#     - 9001:9001
+#     - 8000:8000
+#   volumes:
+#     - ./volumes/logs/php:/var/log
+#     - ~/work:/opt
+#   working_dir: /opt
+#   env_file: .env
 
-php7:
-  build: images/php7
-  ports:
-    - 9007:9000
-    - 9008:9001
-  volumes:
-    - ~/work:/opt
-  working_dir: /opt
-  env_file: .env
+# php7:
+#   build: images/php7
+#   ports:
+#     - 9007:9000
+#     - 9008:9001
+#   volumes:
+#     - ~/work:/opt
+#   working_dir: /opt
+#   env_file: .env
 
 # node:
 #   build: images/node
@@ -57,13 +56,13 @@ php7:
 #   working_dir: /opt
 #   env_file: .env
 
-mysql:
-  build: images/mysql
-  ports:
-    - 3306:3306
-  volumes:
-    - ./volumes/data/mysql:/var/lib/mysql
-  env_file: .env
+# mysql:
+#   build: images/mysql
+#   ports:
+#     - 3306:3306
+#   volumes:
+#     - ./volumes/data/mysql:/var/lib/mysql
+#   env_file: .env
 
 # mongo:
 #   build: images/mongo
