@@ -17,6 +17,8 @@ IMAGES_PULL = "$(DAOMONIT)\
 && dao pull redis:3.0 \
 && dao pull solr:5.4.1 "
 
+HOSTS = $(cat ./conf/hosts)
+
 pull:
 	docker-machine ssh default $(IMAGES_PULL)
 hosts:
@@ -27,7 +29,7 @@ install:
 build:
 	docker build -t dobe_ssdb ./images/ssdb
 env:
-	eval $(docker-machine env default)
+	docker-machine env default sudo echo ${HOSTS} > /etc/hosts
 run:
 	docker run -p 16379:16379 -v ./volumes/data/ssdb:/var/lib/ssdb -it dobe_ssdb /bin/bash
 up:
@@ -41,15 +43,15 @@ rmi:
 
 php5:
 	clear && docker exec -it php5 bash
-
-httpd:
+web:
 	clear && docker exec -it php5 php youzan/scrm-web/bin/httpd
-web-server:
-	clear && docker exec -it php5 youzan/scrm-web/bin/server "$@"
-nova:
+api-proxy:
+	clear && docker exec -it php5 php youzan/nova-http-proxy/bin/httpd
+api:
 	clear && docker exec -it php5 php youzan/scrm-api/bin/nova
-api-server:
-	clear && docker exec -it php5 youzan/scrm-api/bin/server "$@"
+c:
+	cd /opt/youzan/scrm-api && nodemon -x "php bin/nova" -e "php html" -V
+	cd /opt/youzan/scrm-web && nodemon -x "php bin/httpd" -e "php html" -V
 
 dl:
 	wget https://pecl.php.net/get/memcached-2.1.0.tgz -O $(ASSETS)memcached.tgz

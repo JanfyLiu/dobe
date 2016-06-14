@@ -47,6 +47,7 @@ RUN apt-get update && apt-get install -y \
         libmysqlclient-dev \
         supervisor \
         nodejs \
+		npm \
     --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 ENV PHP_INI_DIR /usr/local/etc/php
@@ -198,10 +199,12 @@ RUN cd /home && git clone http://git.qima-inc.com/platform/yz-swoole.git && \
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
 RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com \
-    && composer global require "phpunit/phpunit:^5.2" \
+    && composer global require "phpunit/phpunit:4.*" \
     && composer global require "mockery/mockery:^0.9.4"
 #ENV PATH /root/.composer/vendor/bin:$PATH
 RUN ln -s /root/.composer/vendor/bin/phpunit /usr/bin/phpunit
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN npm install nodemon -g
 
 # PHP config
 COPY ./php.ini /usr/local/etc/php/php.ini
@@ -212,8 +215,6 @@ COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 RUN mkdir -p /private
 
-#ADD ./hosts /tmp/
-#RUN cat /tmp/hosts >> /etc/hosts && cat /etc/hosts
 
 # Write Permission
 RUN usermod -u 1000 www-data

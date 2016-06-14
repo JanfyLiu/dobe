@@ -24,10 +24,4 @@ CONTAINER_CMD=$(docker ps -a | grep 'phpunit' | awk "{print \$1}")
 # 容器内执行php
 docker run -i --rm -w "${PWD}" -v "${PWD}":"${PWD}" -v '/private':'/private' \
 --net=host --sig-proxy=true --pid=host --name="phpunit" \
-#--add-host='fenxiao.api.youzan.com:192.168.99.100' \
-# --add-host='trade.api.youzan.com:192.168.99.100' \
-# --add-host='ump.api.youzan.com:192.168.99.100' \
-# --add-host='goods.api.youzan.com:192.168.99.100' \
-#--add-host='showcase.api.youzan.com:192.168.99.100' \
-# --add-host='cp.api.youzan.com:192.168.99.100' \
 dobe_php5 php -d include_path=/root/.composer/vendor/phpunit/phpunit "$@"
