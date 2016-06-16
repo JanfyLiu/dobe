@@ -191,7 +191,7 @@ RUN pecl install yaf
 #    cd aerospike-client-php/src/aerospike && ./build.sh && make install
 RUN cd /home && git clone http://git.qima-inc.com/platform/yz-swoole.git && \
     cd yz-swoole/swoole-extension && phpize && \
-    ./configure  --enable-async-httpclient --enable-async-mysql --enable-aerospike --enable-sockets \
+    ./configure  --enable-async-httpclient --enable-async-mysql --enable-async-redis --enable-aerospike --enable-sockets \
 #	--enable-aerospike \
 	&& \
     make && make install
