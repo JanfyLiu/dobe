@@ -5,7 +5,6 @@ DAOMONIT = curl -sSL https://get.daocloud.io/daomonit/install.sh | sh -s 433eaf4
 # 加速pull image
 IMAGES_PULL = "$(DAOMONIT)\
 && dao pull debian:jessie \
-&& dao pull ubuntu:14.04 \
 && dao pull elasticsearch:2.1.0 \
 && dao pull memcached:1.4 \
 && dao pull mongo:3.2 \
@@ -17,17 +16,15 @@ IMAGES_PULL = "$(DAOMONIT)\
 && dao pull redis:3.0 \
 && dao pull solr:5.4.1 "
 
-HOSTS = $(cat ./conf/hosts)
+HOSTS =
 
 pull:
 	docker-machine ssh default $(IMAGES_PULL)
-hosts:
-	docker-machine ssh default $(MHOSTS)
+build:
+	docker-compose build
 install:
 	docker-machine ssh default $(IMAGES_PULL)
 	docker-compose build
-build:
-	docker build -t dobe_ssdb ./images/ssdb
 env:
 	docker-machine env default sudo echo ${HOSTS} > /etc/hosts
 run:
