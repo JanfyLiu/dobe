@@ -22,6 +22,7 @@ sudo cat /tmp/hosts >> /etc/hosts
 docker-machine ssh default
 sudo mkdir -p /private/var/folders && sudo mount -t vboxsf -o defaults,uid=`id -u docker`,gid=`id -g docker` private_folders /private/var/folders && exit
 ```
+- 在IDEA里设置phpunit执行脚本，Settings -> Languages & Frameworks -> PHP -> Interpreter -> Other Local，"PHP executable" 设置绝对路径 dobe/scripts/phpunit
 
 #### 构建项目
 ```sh
