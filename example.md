@@ -30,8 +30,6 @@ sudo mkdir -p /private/var/folders && sudo mount -t vboxsf -o defaults,uid=`id -
 cd dobe
 # 设置连接docker环境变量
 eval $(docker-machine env)
-# 拉取docker国内镜像
-make pull
 # 安装镜像
 make install
 #启动容器
