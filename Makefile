@@ -49,6 +49,8 @@ api-proxy:
 	clear && docker exec -it php5 php youzan/nova-http-proxy/bin/httpd
 api:
 	clear && docker exec -it php5 php youzan/scrm-api/bin/nova
+tail:
+	tail -f ./volumes/logs/php/php.log
 c:
 	cd /opt/youzan/scrm-api && nodemon -x "php bin/nova" -e "php html" -V
 	cd /opt/youzan/scrm-web && nodemon -x "php bin/httpd" -e "php html" -V

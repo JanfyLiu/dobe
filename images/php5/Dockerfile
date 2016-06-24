@@ -171,7 +171,7 @@ COPY ./ext/* /usr/local/lib/php/extensions/no-debug-non-zts-20131226/
 # Install PHP extensions (OR docker-php-pecl-install)
 #RUN pecl install /tmp/memcached.tgz
 #RUN pecl install /tmp/memcache.tgz
-#RUN pecl install /tmp/apcu.tgz
+RUN pecl install /tmp/apcu.tgz
 #RUN pecl install /tmp/msgpack.tgz
 #RUN pecl install /tmp/xhprof.tgz
 #RUN pecl install /tmp/xdebug.tgz
@@ -191,10 +191,8 @@ RUN pecl install yaf
 #    cd aerospike-client-php/src/aerospike && ./build.sh && make install
 RUN cd /home && git clone http://git.qima-inc.com/platform/yz-swoole.git && \
     cd yz-swoole/swoole-extension && phpize && \
-    ./configure  --enable-async-httpclient --enable-async-mysql --enable-async-redis --enable-aerospike --enable-sockets \
-#	--enable-aerospike \
-	&& \
-    make && make install
+    ./configure  --enable-async-httpclient --enable-async-mysql --enable-async-redis --enable-aerospike --enable-sockets\
+    && make && make install
 
 # Install Composer
 RUN cp /tmp/composer.phar /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
